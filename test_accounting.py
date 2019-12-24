@@ -1,4 +1,6 @@
-from main import Accounting, IBudgetRepo
+from Accounting import Accounting
+from IBudgetRepo import IBudgetRepo
+from BudgetModel import BudgetModel
 
 import unittest
 import datetime
@@ -7,7 +9,7 @@ import datetime
 class TestAccountingBudget(unittest.TestCase):
 
     def setUp(self):
-        self.repo = IBudgetRepo()
+        self.repo = FakeBudgetRepo()
         self.accounting = Accounting(self.repo)
 
     def test_no_budget(self):
@@ -50,6 +52,12 @@ class TestAccountingBudget(unittest.TestCase):
 
     def create_budget_data(self, date, amount):
         self.repo.insert_data(date, amount)
+
+
+class FakeBudgetRepo(IBudgetRepo):
+
+    def insert_data(self, date, amount):
+        self.db[date.strftime('%Y%m')] = BudgetModel(date, amount)
 
 
 if __name__ == '__main__':
