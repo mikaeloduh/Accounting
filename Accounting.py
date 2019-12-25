@@ -18,16 +18,16 @@ class Accounting:
         date_start_month = total_date_start_month - start.day + 1
         date_end_month = end.day
 
-        budget = 0
+        total_budget = 0
         for k, v in self.repo.get_all().items():
             if k == str_start and (start.year == end.year) and (start.month == end.month):
-                budget = budget + v.amount * (end.day - start.day + 1) // total_date_start_month
+                total_budget = total_budget + v.amount * (end.day - start.day + 1) // total_date_start_month
             elif k == str_start:
-                budget = budget + (
+                total_budget = total_budget + (
                             v.amount * date_start_month // total_date_start_month)
             elif str_start < k < str_end:
-                budget = budget + v.amount
+                total_budget = total_budget + v.amount
             elif k == str_end:
-                budget = budget + (v.amount * date_end_month // total_date_end_month)
+                total_budget = total_budget + (v.amount * date_end_month // total_date_end_month)
 
-        return budget
+        return total_budget
