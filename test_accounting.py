@@ -56,6 +56,9 @@ class TestAccountingBudget(unittest.TestCase):
 
 class FakeBudgetRepo(IBudgetRepo):
 
+    def __init__(self):
+        super(FakeBudgetRepo, self).__init__()
+
     def insert_data(self, date, amount):
         self.db[date.strftime('%Y%m')] = BudgetModel(date, amount)
 
