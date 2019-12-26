@@ -2,10 +2,6 @@ from calendar import monthrange
 from datetime import datetime
 
 
-def day_of_month(v):
-    return monthrange(v.year_month.year, v.year_month.month)[1]
-
-
 class Accounting:
 
     def __init__(self, budget_repo):
@@ -19,14 +15,14 @@ class Accounting:
         total_budget = 0
         for k, v in self.repo.get_all().items():
             if k == str_start and (start.year == end.year) and (start.month == end.month):
-                total_budget = v.amount * (end.day - start.day + 1) // day_of_month(v)
+                total_budget = v.amount * (end.day - start.day + 1) // v.day_of_month()
                 break
             elif k == str_start:
-                total_budget = v.amount * (day_of_month(v) - start.day + 1) // day_of_month(v)
+                total_budget = v.amount * (v.day_of_month() - start.day + 1) // v.day_of_month()
             elif str_start < k < str_end:
                 total_budget = total_budget + v.amount
             elif k == str_end:
-                total_budget = total_budget + (v.amount * end.day // day_of_month(v))
+                total_budget = total_budget + (v.amount * end.day // v.day_of_month())
                 break
 
         return total_budget
