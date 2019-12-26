@@ -7,5 +7,5 @@ class BudgetModel:
         self.year_month = year_month
         self.amount = amount
 
-    def day_of_month(self):
+    def days_in_month(self):
         return monthrange(self.year_month.year, self.year_month.month)[1]
