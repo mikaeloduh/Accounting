@@ -15,14 +15,16 @@ class Accounting:
 
         total_budget = 0
         for k, v in self.repo.get_all().items():
+            daily_budget = v.amount // v.days_in_month()
+
             if k == str_start and (start.year == end.year) and (start.month == end.month):
-                total_budget = v.amount // v.days_in_month() * (end.day - start.day + 1)
+                total_budget = daily_budget * (end.day - start.day + 1)
                 break
             elif k == str_start:
-                total_budget = total_budget + v.amount // v.days_in_month() * (v.days_in_month() - start.day + 1)
+                total_budget = total_budget + daily_budget * (v.days_in_month() - start.day + 1)
             elif str_start < k < str_end:
                 total_budget = total_budget + v.amount
             elif k == str_end:
-                total_budget = total_budget + v.amount // v.days_in_month() * end.day
+                total_budget = total_budget + daily_budget * end.day
 
         return total_budget
