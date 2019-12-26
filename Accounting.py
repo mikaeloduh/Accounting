@@ -12,21 +12,18 @@ class Accounting:
         str_end = end.strftime('%Y%m')
 
         # 相差幾天
-        total_date_start_month = monthrange(start.year, start.month)[1]
-        total_date_end_month = monthrange(end.year, end.month)[1]
-
-        date_start_month = total_date_start_month - start.day + 1
         total_budget = 0
         for k, v in self.repo.get_all().items():
             if k == str_start and (start.year == end.year) and (start.month == end.month):
-                total_budget = v.amount * (end.day - start.day + 1) // total_date_start_month
+                total_budget = v.amount * (end.day - start.day + 1) // monthrange(start.year, start.month)[1]
                 break
             elif k == str_start:
-                total_budget = v.amount * date_start_month // total_date_start_month
+                total_budget = v.amount * (monthrange(start.year, start.month)[1] - start.day + 1) // \
+                               monthrange(start.year, start.month)[1]
             elif str_start < k < str_end:
                 total_budget = total_budget + v.amount
             elif k == str_end:
-                total_budget = total_budget + (v.amount * end.day // total_date_end_month)
+                total_budget = total_budget + (v.amount * end.day // monthrange(end.year, end.month)[1])
                 break
 
         return total_budget
