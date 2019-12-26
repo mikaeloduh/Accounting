@@ -61,12 +61,19 @@ class TestAccountingBudget(unittest.TestCase):
 
         self.assertEqual(budget, 330)
 
-    def test_Cross_Years(self):
+    def test_cross_years(self):
         self.create_budget_data(datetime.datetime(2019, 12, 1), 3100)
         self.create_budget_data(datetime.datetime(2020, 1, 1), 31000)
         budget = self.accounting.query_budget(datetime.datetime(2019, 12, 1),
                                               datetime.datetime(2020, 1, 31))
         self.assertEqual(budget, 34100)
+
+    def test_invalid_input(self):
+        self.create_budget_data(datetime.datetime(2019, 12, 31), 3100)
+        self.create_budget_data(datetime.datetime(2019, 12, 1), 31000)
+        budget = self.accounting.query_budget(datetime.datetime(2019, 12, 31),
+                                              datetime.datetime(2019, 11, 1))
+        self.assertEqual(0, budget)
 
     def create_budget_data(self, date, amount):
         self.repo.insert_data(date, amount)

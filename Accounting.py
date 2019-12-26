@@ -6,6 +6,10 @@ class Accounting:
         self.repo = budget_repo
 
     def query_budget(self, start, end):
+
+        if start > end:
+            return 0
+
         str_start = start.strftime('%Y%m')
         str_end = end.strftime('%Y%m')
 
