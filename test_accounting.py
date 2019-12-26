@@ -50,6 +50,24 @@ class TestAccountingBudget(unittest.TestCase):
 
         self.assertEqual(budget, 500)
 
+    def test_contain_no_data_multi_months(self):
+        self.create_budget_data(datetime.datetime(2019, 9, 1), 30)
+        self.create_budget_data(datetime.datetime(2019, 11, 1), 300)
+        self.create_budget_data(datetime.datetime(2019, 12, 1), 3100)
+        self.create_budget_data(datetime.datetime(2020, 1, 1), 31000)
+        self.create_budget_data(datetime.datetime(2020, 12, 1), 310000)
+        budget = self.accounting.query_budget(datetime.datetime(2019, 9, 1),
+                                              datetime.datetime(2019, 11, 30))
+
+        self.assertEqual(budget, 330)
+
+    def test_Cross_Years(self):
+        self.create_budget_data(datetime.datetime(2019, 12, 1), 3100)
+        self.create_budget_data(datetime.datetime(2020, 1, 1), 31000)
+        budget = self.accounting.query_budget(datetime.datetime(2019, 12, 1),
+                                              datetime.datetime(2020, 1, 31))
+        self.assertEqual(budget, 34100)
+
     def create_budget_data(self, date, amount):
         self.repo.insert_data(date, amount)
 

@@ -9,7 +9,6 @@ class Accounting:
         str_start = start.strftime('%Y%m')
         str_end = end.strftime('%Y%m')
 
-        # 相差幾天
         total_budget = 0
         for k, v in self.repo.get_all().items():
             if k == str_start and (start.year == end.year) and (start.month == end.month):
