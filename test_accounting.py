@@ -51,8 +51,8 @@ class TestAccountingBudget(unittest.TestCase):
         self.assertEqual(budget, 500)
 
     def test_contain_no_data_multi_months(self):
-        self.create_budget_data(datetime.datetime(2019, 9, 1), 30)
         self.create_budget_data(datetime.datetime(2019, 11, 1), 300)
+        self.create_budget_data(datetime.datetime(2019, 9, 1), 30)
         self.create_budget_data(datetime.datetime(2019, 12, 1), 3100)
         self.create_budget_data(datetime.datetime(2020, 1, 1), 31000)
         self.create_budget_data(datetime.datetime(2020, 12, 1), 310000)

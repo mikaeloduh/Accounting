@@ -15,11 +15,10 @@ class Accounting:
                 total_budget = v.amount * (end.day - start.day + 1) // v.days_in_month()
                 break
             elif k == str_start:
-                total_budget = v.amount * (v.days_in_month() - start.day + 1) // v.days_in_month()
+                total_budget = total_budget + v.amount * (v.days_in_month() - start.day + 1) // v.days_in_month()
             elif str_start < k < str_end:
                 total_budget = total_budget + v.amount
             elif k == str_end:
                 total_budget = total_budget + (v.amount * end.day // v.days_in_month())
-                break
 
         return total_budget
